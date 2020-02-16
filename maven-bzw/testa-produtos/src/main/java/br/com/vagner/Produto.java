@@ -15,10 +15,11 @@ public class Produto {
 	}
 	
 	public String getNome() {
-		return nome;
+		return nome + " 2";
 	}
 	
 //	public double getPreco() {
 //		return preco;
 //	}
 }
+

@@ -1,5 +1,5 @@
 # cursos_alura
-
+Maven: Build do zero a web
 
 cd calculadora
 
@@ -22,3 +22,6 @@ mvn archetype:generate -DartifactId=produtos -DgroupId=br.com.alura.maven -Dinte
 mvn package
 
 java -cp produtos-1.0-SNAPSHOT.jar br.com.alura.maven.App
+
+mvn test
+mvn surefire-report:report
