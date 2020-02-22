@@ -1,10 +1,15 @@
 package br.com.vagner;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.JsonNull;
+
 /**
  * Hello world!
  *
  */
 public class Produto {
+	ExclusionStrategy exclusionStrategy;
+	
 	private final String nome;
 	private final double preco;
 	
@@ -15,6 +20,7 @@ public class Produto {
 	}
 	
 	public String getNome() {
+		System.out.println(JsonNull.INSTANCE);
 		return nome;
 	}
 	
