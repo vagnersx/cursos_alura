@@ -2,6 +2,7 @@ package br.com.vagner.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -51,7 +52,8 @@ public class TopicosController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<TopicoDTO> salvar(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
+	@Transactional
+	public ResponseEntity<TopicoDTO> cadastrar(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
 		Topico topico = topicoForm.converter(cursoRepository);
 		topicoRepository.save(topico);
 		
@@ -60,9 +62,15 @@ public class TopicosController {
 	}
 	
 	@GetMapping(path = "/{id}")
-	public DetalhesTopicoDTO detalhar(@PathVariable Long id) {
-		Topico topico = topicoRepository.getOne(id);
-		return new DetalhesTopicoDTO(topico);
+	public ResponseEntity<DetalhesTopicoDTO> detalhar(@PathVariable Long id) {
+		//Topico topico = topicoRepository.getOne(id);
+		Optional<Topico> topico = topicoRepository.findById(id);
+		
+		if (topico.isPresent()) {
+			return ResponseEntity.ok(new DetalhesTopicoDTO(topico.get()));
+		}
+		
+		return ResponseEntity.notFound().build();
 	}
 	
 	@PutMapping(path = "/{id}")

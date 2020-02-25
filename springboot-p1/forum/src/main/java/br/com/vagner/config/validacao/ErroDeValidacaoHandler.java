@@ -1,5 +1,6 @@
 package br.com.vagner.config.validacao;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import br.com.vagner.controller.dto.ErroDeFormularioDTO;
 
@@ -22,7 +24,7 @@ public class ErroDeValidacaoHandler {
 	
 	@Autowired
 	private MessageSource messageSource;
-
+	
 	@ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public List<ErroDeFormularioDTO> handleNotValid(MethodArgumentNotValidException exception) {
@@ -43,8 +45,16 @@ public class ErroDeValidacaoHandler {
 	}
 	
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
-	@ExceptionHandler(EntityNotFoundException.class)
-	public void handleNotReadable(EntityNotFoundException exception) {
+	@ExceptionHandler({EntityNotFoundException.class, MethodArgumentTypeMismatchException.class})
+	public void handleNotReadable(Exception exception) {
 
 	}
+	
+//	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+//	@ExceptionHandler(Throwable.class)
+//	public List<ErroDeFormularioDTO> handleInternalServerError(Throwable exception) {
+//		ErroDeFormularioDTO erroDeFormularioDTO = new ErroDeFormularioDTO("Erro desconhecido", "Ocorreu um erro desconhecido");
+//		return Arrays.asList(erroDeFormularioDTO);
+//	}
+	
 }
