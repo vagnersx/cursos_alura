@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+//github.com/vagnersx/cursos_alura.git
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -43,7 +45,7 @@ public class TopicosController {
 	private CursoRepository cursoRepository;
 
 	@GetMapping
-	//@Cacheable(value = "listaDeTopicos")
+	@Cacheable(value = "listaDeTopicos")
 	public Page<TopicoDTO> listar(@RequestParam(required = false) String nomeCurso,
 			@PageableDefault(direction = Direction.DESC, sort = "id", page = 0, size = 10) Pageable paginacao) {
 		// @RequestParam int pagina, @RequestParam int qtd, @RequestParam String
