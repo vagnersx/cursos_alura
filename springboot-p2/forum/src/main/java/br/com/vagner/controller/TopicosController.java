@@ -48,6 +48,7 @@ public class TopicosController {
 	@Cacheable(value = "listaDeTopicos")
 	public Page<TopicoDTO> listar(@RequestParam(required = false) String nomeCurso,
 			@PageableDefault(direction = Direction.DESC, sort = "id", page = 0, size = 10) Pageable paginacao) {
+		System.out.println("Estou listando");
 		// @RequestParam int pagina, @RequestParam int qtd, @RequestParam String
 		// ordenacao) {
 
